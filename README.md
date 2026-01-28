@@ -8,8 +8,8 @@
 
 <!-- badges: end -->
 
-The goal of AsymmIRT is to perform bayesian analysis of asymmetrical IRT
-models (e.g 1PLPE, 1PRLPE, LPE, RLPE) and widely known symmetrical
+The goal of AsymmIRT is to perform bayesian analysis of asymmetric IRT
+models (e.g 1PLPE, 1PRLPE, LPE, RLPE) and widely known symmetric
 models such as 1PL and 2PL. The family of LPE models considers a
 parameter which introduces asymmetry in the ICC.
 
