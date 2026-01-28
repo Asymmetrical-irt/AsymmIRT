@@ -35,9 +35,9 @@ plot_trace.Asymmfit <- function(x, pars = "b",...){
   j <- x$data$k
   bayesplot::color_scheme_set("mix-blue-red")
 
-  draws <- x$output$draws(pars=pars,format = "matrix")
-
-  bayesplot::mcmc_trace(draws, pars = pars,...)
+  bayesplot::color_scheme_set("mix-blue-red")
+  bayesplot::mcmc_trace(x$output$draws(variables = pars,format = "matrix"))
 
 
 }
+
