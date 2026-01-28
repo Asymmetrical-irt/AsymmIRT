@@ -1,0 +1,134 @@
+---
+output: 
+      github_document:
+                  pandoc_args: --webtex
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+
+remotes::install_github("Asymmetrical-irt/AsymmIRT")
+```
+
+
+```{r example}
+library(AsymmIRT)
+```
+
+
+# AsymmIRT: Bayesian analysis of asymmetrical IRT models (RLPE, LPE) models and symmetrical IRT models
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+The goal of AsymmIRT is to perform bayesian analysis of asymmetrical IRT models (e.g 1PLPE, 1PRLPE, LPE, RLPE) and widely known symmetrical models such as 1PL and 2PL. The family of LPE models considers a parameter which introduces asymmetry in the ICC.
+
+## Installation
+
+AsymmIRT uses [`cmdstanr`](https://mc-stan.org/cmdstanr/) (not available on CRAN), to install it you should follow these instructions [Getting started with CmdStanR](https://mc-stan.org/cmdstanr/articles/cmdstanr.html) 
+
+You can install the development version of AsymmIRT like so:
+
+``` r
+remotes::install_github("Asymmetrical-irt/AsymmIRT")
+```
+
+## Data simulation
+
+This is a basic example on how to simulate data from the available asymmetrical and symmetrical models. The user can also plot the scores and the parameters of the simulated data. There is also a way to print a summary of the dataset.
+
+```{r parallel_setup}
+j = 20 ## number of items
+k = 4      ## number of individuals
+model_type   = "1PLPE"   ## type of model to simulate data from (e.g LPE, RLPE,1PRLPE)
+seed = 123  
+```
+
+```{r example}
+library(AsymmIRT)
+
+data <- simData(j, k, seed,model_type)
+
+
+plot(data)
+print(data)
+```
+
+## Fitting the data to a model
+
+Fitting models under the AsymmIRT package relies on pre-compiled models, which are pre-compiled using the *instantiate* package, which manages the compilation and loading of the Stan models. It is important to notice that the function fit_model() accepts the same arguments as the sample method in CmdStanR.
+
+Additionally and since computing metrics such as WAIC, DIC and loo can be computationally expensive, the available models for fitting has a '_log' suffix, if the user chooses, for example, '1PLPE_log' instead of '1PLPE' then they can use the methods in the package to compute these metrics.
+
+```{r fit_setup}
+iter_warmup = 200 ## number of items
+iter_sampling = 200      ## number of individuals
+model_type   = "1PLPE_log"   ## type of model 
+seed = 123  
+data = data$df 
+chains = 2 ## number of chains
+parallel_chains = 2 ## Running chains in parallel
+```
+
+Notice that the function fit_model() returns a list of three objects. The data list, type of model and the **output** which is a R6 CmdStanMCMC object.
+
+
+```{r fit}
+fit <- fit_model(data = data, iter_warmup = iter_warmup, iter_sampling = iter_sampling, model_type = model_type, seed = seed)
+```
+
+
+```{r fit_methods}
+code(fit)
+```
+
+Here we can see the code of the model. In this example priors are
+
+$$\theta_{i} \sim N(0,1)$$
+$$b_{j} \sim N(0,\sqrt{2})$$
+$$\lambda_{j} \sim LogNormal(0,\sqrt{0.5})$$
+
+The model 1PLPE is:
+
+$$p_{ij}^{1PLPE} = P(Y_{ij} = 1) = \left( \frac{\exp(\theta - b)}{\exp(\theta - b) + 1} \right)^{\lambda_{j}}$$
+
+Now it is possible to delve into the bayesian analysis. Notice that WAIC and loo accept other arguments, for further information visit the webpage of the **loo** package.
+ 
+```{r fit_methods}
+summary(fit,variable = c("b","theta","lambda"), ci = 0.95)
+```
+
+
+```{r fit_methods}
+DIC(fit)
+```
+
+
+```{r fit_methods}
+WAIC(fit)
+```
+
+
+```{r fit_methods}
+loo(fit)
+```
+
+
+
+Lets plot the item icc and item info
+
+
+```{r fit_methods}
+item_icc(fit, item = 2, theta_lim = c(-12,12))
+```
+
+
+```{r fit_methods}
+item_info(fit, item = 2, theta_lim = c(-12,12))
+```
+

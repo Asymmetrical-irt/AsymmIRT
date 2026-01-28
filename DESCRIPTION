@@ -1,0 +1,49 @@
+Package: AsymmIRT
+Type: Package
+Title: Bayesian 1PL, 2PL, 1PRLPE, 1PLPE, LPE, RLPE (IRT models) using CmdStanR
+Version: 0.1.0
+Authors@R: c(
+    person(
+      "Jorge", "González",
+      email = "jorge.gonzalezb@uc.cl",
+      role = c("aut"),
+      comment = c(ORCID = "0000-0003-0415-3795")
+    ),
+    person(
+      "Jorge", "Bazán",
+      email = "jlbazan@uc.cl",
+      role = c("aut"), 
+      comment = c(ORCID = "0000-0003-3918-8795")
+    ),
+      person(
+      "Isidora", "Colil",
+      email = "isidora.colil5@gmail.com",
+      role = c("aut", "cre")
+    )
+  )
+Maintainer: Isidora Colil <isidora.colil5@gmail.com>
+Depends: 
+    R (>= 3.4.0)
+Imports:
+	dplyr (>= 1.0.0),
+	ggplot2 (>= 3.3.0),
+	instantiate,
+	loo (>= 2.6.0),
+	bayestestR(>= 0.15.2),
+	bayesplot (>= 1.11.1)
+Suggests: testthat (>= 3.0.0)
+Additional_repositories:
+    https://mc-stan.org/r-packages/
+Description: Fit the Bayesian version of the LPE (logistic positive exponential), RLPE
+    (reversal logistic positive exponential), 1PLPE, 1PRLPE, 2PL and 1PL models using CmdStanR. 
+    Furthermore,the package allows computing predictive metrics (e.g., WAIC, LOO, and DIC),
+    simulating data from some models (1PRLPE, 1PLPE, LPE, RLPE) and also allows the user to 
+    obtain the Item Characteristic Curve and Item Information function according to each model.
+    References: Bazán et al. (2010) <doi:10.3102/1076998610375834>; 
+    Bazán et al. (2023) <doi:10.1214/22-BJPS558>
+    Samejima (1999).
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.3.3
+Config/testthat/edition: 3
