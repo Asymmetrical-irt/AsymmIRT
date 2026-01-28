@@ -2,7 +2,7 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 
-# AsymmIRT: Bayesian analysis of asymmetrical IRT models (RLPE, LPE) models and symmetrical IRT models
+# AsymmIRT: Bayesian analysis of asymmetric IRT models (RLPE, LPE) models and symmetric IRT models
 
 <!-- badges: start -->
 
@@ -29,7 +29,7 @@ remotes::install_github("Asymmetrical-irt/AsymmIRT")
 ## Data simulation
 
 This is a basic example on how to simulate data from the available
-asymmetrical and symmetrical models. The user can also plot the scores
+asymmetric and symmetric models. The user can also plot the scores
 and the parameters of the simulated data. There is also a way to print a
 summary of the dataset.
 
