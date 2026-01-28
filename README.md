@@ -1,9 +1,6 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-``` r
-library(AsymmIRT)
-```
 
 # AsymmIRT: Bayesian analysis of asymmetrical IRT models (RLPE, LPE) models and symmetrical IRT models
 
