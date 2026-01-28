@@ -29,8 +29,8 @@ remotes::install_github("Asymmetrical-irt/AsymmIRT")
 ## Data simulation
 
 This is a basic example on how to simulate data from the available
-asymmetric and symmetric models. The user can also plot the scores
-and the parameters of the simulated data. There is also a way to print a
+asymmetric asymmetric models. In this version models to simulate synthetic data from are: LPE and RLPE.
+The user can also plot the scores and the parameters of the simulated data. There is also a way to print a
 summary of the dataset.
 
 ``` r
@@ -97,9 +97,9 @@ notice that the function fit_model() accepts the same arguments as the
 sample method in CmdStanR.
 
 Additionally and since computing metrics such as WAIC, DIC and loo can
-be computationally expensive, the available models for fitting has a
-’\_log’ suffix, if the user chooses, for example, ‘1PLPE_log’ instead of
-‘1PLPE’ then they can use the methods in the package to compute these
+be computationally expensive, the available pool of models for fitting includes versions
+with a ’\_log’ suffix, if the user chooses, for example, ‘1PLPE_log’ instead 
+of ‘1PLPE’ then they can use the methods in the package to compute these
 metrics.
 
 ``` r
