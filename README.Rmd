@@ -16,7 +16,7 @@ remotes::install_github("Asymmetrical-irt/AsymmIRT")
 ```
 
 
-```{r example}
+```{r library}
 library(AsymmIRT)
 ```
 
@@ -45,14 +45,14 @@ This is a basic example on how to simulate data from the available asymmetrical 
 ```{r parallel_setup}
 j = 20 ## number of items
 k = 4      ## number of individuals
-model_type   = "1PLPE"   ## type of model to simulate data from (e.g LPE, RLPE,1PRLPE)
+model_type   = "LPE"   ## type of model to simulate data from (e.g LPE, RLPE,1PRLPE)
 seed = 123  
 ```
 
 ```{r example}
 library(AsymmIRT)
 
-data <- simData(j, k, seed,model_type)
+data <- simData(j =20 , k = 4, seed = 123,model_type ="LPE")
 
 
 plot(data)
@@ -79,7 +79,8 @@ Notice that the function fit_model() returns a list of three objects. The data l
 
 
 ```{r fit}
-fit <- fit_model(data = data, iter_warmup = iter_warmup, iter_sampling = iter_sampling, model_type = model_type, seed = seed)
+data <- simData(j =20 , k = 4, seed = 123,model_type ="LPE")
+fit <- AsymmIRT::fit_model(data = data$df, iter_warmup = iter_warmup, iter_sampling = iter_sampling, mod = "LPE2_log", seed = seed, chains = chains, parallel_chains = parallel_chains)
 ```
 
 
@@ -99,22 +100,22 @@ $$p_{ij}^{1PLPE} = P(Y_{ij} = 1) = \left( \frac{\exp(\theta - b)}{\exp(\theta - 
 
 Now it is possible to delve into the bayesian analysis. Notice that WAIC and loo accept other arguments, for further information visit the webpage of the **loo** package.
  
-```{r fit_methods}
+```{r fit_summary}
 summary(fit,variable = c("b","theta","lambda"), ci = 0.95)
 ```
 
 
-```{r fit_methods}
+```{r fit_dic}
 DIC(fit)
 ```
 
 
-```{r fit_methods}
+```{r fit_waic}
 WAIC(fit)
 ```
 
 
-```{r fit_methods}
+```{r fit_loo}
 loo(fit)
 ```
 
@@ -123,12 +124,12 @@ loo(fit)
 Lets plot the item icc and item info
 
 
-```{r fit_methods}
+```{r item_icc}
 item_icc(fit, item = 2, theta_lim = c(-12,12))
 ```
 
 
-```{r fit_methods}
+```{r item_info}
 item_info(fit, item = 2, theta_lim = c(-12,12))
 ```
 
