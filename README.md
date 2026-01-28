@@ -2,7 +2,7 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 
-# AsymmIRT: Bayesian analysis of asymmetric IRT models (RLPE, LPE) models and symmetric IRT models
+# AsymmIRT: Bayesian analysis of asymmetric IRT models (RLPE, LPE) and symmetric IRT models
 
 <!-- badges: start -->
 
