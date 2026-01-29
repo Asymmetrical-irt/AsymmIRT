@@ -21,7 +21,7 @@ Plot the item information of a specified item from a simdata or Asymmfit object
 }
 \examples{
 
-dat <- simData(j=10,k=10,seed=123,model_type="LPE")
+dat <- simData(n=10,k=10,seed=123,model_type="LPE")
 if (instantiate::stan_cmdstan_exists()) {
 
 fit <- fit_model(data = dat$df, mod = "LPE2", iter_sampling = 50, iter_warmup = 100,

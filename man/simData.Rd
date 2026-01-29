@@ -4,12 +4,12 @@
 \alias{simData}
 \title{Simulate a dataset from a RLPE, LPE, 1PLPE, or 1PRLPE model}
 \usage{
-simData(j, k, seed, model_type)
+simData(n, k, seed, model_type)
 }
 \arguments{
-\item{j}{Integer. Number of items}
+\item{n}{Integer. Number of individuals}
 
-\item{k}{Integer. Number of individuals}
+\item{k}{Integer. Number of items}
 
 \item{seed}{Integer. Random seed for reproducibility}
 
@@ -27,7 +27,7 @@ An object of class \code{"simdata"}: a list with components:
 This function simulates data and returns a list of the model parameters and a dataframe,
 its rows refer to individuals whereas columns to items. The data is simulated from the LPE (Logistic positive exponential)
 family of models (e.g RLPE, LPE, 1PRLE, or 1PLPE)
-based on the works of Samejima (1999). For more details, see the works of Bazan et al. (2023)
+based on the worns of Samejima (1999). For more details, see the worns of Bazan et al. (2023)
 }
 \details{
 Use \code{methods(class = "simdata")} to see methods applicable to this class.
@@ -35,7 +35,7 @@ To access further information about these methods use \code{?method_name.Asymmfi
 (e.g \code{?summary.Asymmfit})
 }
 \examples{
-data <- simData(j=40,k=1000,seed=123,model_type = "RLPE")
+data <- simData(n=1000,k=40,seed=123,model_type = "RLPE")
 plot(data)
 
 }

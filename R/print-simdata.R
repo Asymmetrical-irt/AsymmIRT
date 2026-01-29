@@ -1,10 +1,10 @@
-#' Print summary of simulated dataset
+#' Print summary of simulated dataset or a binary matrix
 #'
 #' This function computes some descriptive statistics (e.g mean, sd, proportions of 1's and 0's)
-#' of the generated dataset with the simData function. Kappa's index is computed by following the works
+#' of the generated dataset with the simData function or a binary matrix only containing ones and zeros. Kappa's index is computed by following the works
 #' of Bazán et. al (2025), where an item is considered unbalanced if kappa > 0.2
 #'
-#' @param x An object of class \code{"simdata"}
+#' @param x An object of class \code{"simdata"} or a binary matrix containing only zeros and ones, with rows representing individuals and columns representing items
 #' @param ... Ignored
 #' @importFrom stats sd
 #' @returns A matrix with item-level descriptive statistics:
@@ -25,18 +25,30 @@
 #' }
 print.simdata <- function(x,...){
 
-  stopifnot(inherits(x, "simdata"))
+  if(inherits(x, "simdata")){
+    binary_matrix <- x$df
+  }else{
+    binary_matrix <- as.matrix(x)
+  }
 
-  n_row <- nrow(x$df)
-  n_col <- ncol(x$df)
-
-  itemfreq <- as.matrix(colMeans(x$df), ncol=n_col,nrow=n_row)
-  itemsd <- as.matrix(apply(x$df, 2,sd), ncol=n_col,nrow=n_row)
-  items_prop_1 <- as.matrix(colMeans(x$df == 1),nrow=n_row,ncol=n_col)
-  items_prop_0 <- as.matrix(colMeans(x$df == 0),nrow=n_row,ncol=n_col)
+  if (!(inherits(binary_matrix, "simdata") || (is.matrix(binary_matrix) && all(binary_matrix %in% c(0,1))))) {
+    stop("x must be an object of 'simdata' or a binary matrix of 1's and 0's")
+  }
 
 
-  Y_matrix <- as.matrix(x$df)
+
+
+
+  n_row <- nrow(binary_matrix)
+  n_col <- ncol(binary_matrix)
+
+  itemfreq <- as.matrix(colMeans(binary_matrix), ncol=n_col,nrow=n_row)
+  itemsd <- as.matrix(apply(binary_matrix, 2,sd), ncol=n_col,nrow=n_row)
+  items_prop_1 <- as.matrix(colMeans(binary_matrix == 1),nrow=n_row,ncol=n_col)
+  items_prop_0 <- as.matrix(colMeans(binary_matrix == 0),nrow=n_row,ncol=n_col)
+
+
+  Y_matrix <- as.matrix(binary_matrix)
   p <-apply(Y_matrix,2,mean)
   k <-abs(2*p-1)
 

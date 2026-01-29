@@ -3,10 +3,11 @@
 #' This function simulates data and returns a list of the model parameters and a dataframe,
 #' its rows refer to individuals whereas columns to items. The data is simulated from the LPE (Logistic positive exponential)
 #' family of models (e.g RLPE, LPE, 1PRLE, or 1PLPE)
-#' based on the works of Samejima (1999). For more details, see the works of Bazan et al. (2023)
+#' based on the worns of Samejima (1999). For more details, see the worns of Bazan et al. (2023)
 #'
-#' @param j Integer. Number of items
-#' @param k Integer. Number of individuals
+#'
+#' @param n Integer. Number of individuals
+#' @param k Integer. Number of items
 #' @param seed Integer. Random seed for reproducibility
 #' @param model_type A string that specifies the model (RLPE, LPE, 1PLPE, or 1PRLPE)
 #'
@@ -28,14 +29,14 @@
 #' @export
 #'
 #' @examples
-#' data <- simData(j=40,k=1000,seed=123,model_type = "RLPE")
+#' data <- simData(n=1000,k=40,seed=123,model_type = "RLPE")
 #' plot(data)
 #'
-simData <- function(j,k,seed,model_type){
-
-  if (length(j) != 1 || j <= 0 || j != as.integer(j)) stop("j is not a positive integer")
+simData <- function(n,k,seed,model_type){
 
   if (length(k) != 1 || k <= 0 || k != as.integer(k)) stop("k is not a positive integer")
+
+  if (length(n) != 1 || n <= 0 || n != as.integer(n)) stop("n is not a positive integer")
 
   if (seed <= 0 || seed != as.integer(seed)) stop("seed is not a positive integer")
 
@@ -43,8 +44,8 @@ simData <- function(j,k,seed,model_type){
 
   set.seed(seed)
 
-  pts <- rep(floor(j/3),3)
-  rt <- j - floor(j/3)*3
+  pts <- rep(floor(k/3),3)
+  rt <- k - floor(k/3)*3
 
   indx = 1
   while(rt > 0){ pts[indx] = pts[indx] + 1
@@ -56,15 +57,15 @@ simData <- function(j,k,seed,model_type){
 
   lambda <- c(runif(pts[1],0.5,0.9), runif(pts[2],0.9,1.1), runif(pts[3],1.1,5))
 
-  theta <- rnorm(k)
+  theta <- rnorm(n)
 
   if(model_type %in% c("LPE","RLPE")){
-    a = runif(j, 0.75 ,3)
+    a = runif(k, 0.75 ,3)
   }else{
-    a = rep(1,j)
+    a = rep(1,k)
   }
 
-  bi = runif(j, -3, 3)
+  bi = runif(k, -3, 3)
 
 
 
@@ -89,11 +90,11 @@ simData <- function(j,k,seed,model_type){
 
   df <- data.frame(sapply(1:nrow(items), function(i) {
     probs <- with(items[i, ], mod_fun(a,b,theta,lambda,model_type))
-    ifelse(runif(k) < probs, 1, 0)
+    ifelse(runif(n) < probs, 1, 0)
   }))
 
 
-  colnames(df) <- paste0("Item_",1:j)
+  colnames(df) <- paste0("Item_",1:k)
 
 
 

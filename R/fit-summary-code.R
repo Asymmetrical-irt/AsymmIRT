@@ -25,7 +25,7 @@ summary.Asymmfit <- function(object, variable = c("b","theta"), ci = 0.95, ...) 
 }
 
 
-#' Stan code of the model fitted
+#' Stan code of the fitted model
 #'
 #' @param x An Asymmfit object obtained with 'fit_model()'
 #' @param ... Ignored

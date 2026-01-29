@@ -19,7 +19,7 @@ This function generates a total scores plot and a boxplot of the item parameters
 (`a`, `b`, and `λ`) from a `simdata` object
 }
 \examples{
-data <- simData(j=20,k=500,seed=123,model_type = "LPE")
+data <- simData(n=200,k=20,seed=123,model_type = "LPE")
 plot(data)
 
 }

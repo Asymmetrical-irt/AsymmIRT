@@ -3,7 +3,7 @@
 \name{code}
 \alias{code}
 \alias{code.Asymmfit}
-\title{Stan code of the model fitted}
+\title{Stan code of the fitted model}
 \usage{
 code(x, ...)
 
@@ -18,7 +18,7 @@ code(x, ...)
 stan model code
 }
 \description{
-Stan code of the model fitted
+Stan code of the fitted model
 }
 \examples{
 \dontrun{

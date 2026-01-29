@@ -7,12 +7,13 @@
 #' @param ... Ignored
 #' @importFrom ggplot2 ggplot aes geom_bar geom_boxplot xlab ylab scale_x_continuous theme_bw labs element_text theme element_line .data
 #' @importFrom dplyr mutate
+#' @importFrom ggplot2 after_stat geom_histogram
 #'
 #' @return no returns
 #' @export
 #'
 #' @examples
-#' data <- simData(j=20,k=500,seed=123,model_type = "LPE")
+#' data <- simData(n=200,k=20,seed=123,model_type = "LPE")
 #' plot(data)
 #'
 plot.simdata <- function(x,...){
@@ -20,22 +21,19 @@ plot.simdata <- function(x,...){
 
  stopifnot("Object passed must be created with simData function" = inherits(x, "simdata"))
 
-  j <- ncol(x$df)
+  k <- ncol(x$df)
 
   scores <- rowSums(x$df)
 
-  SCORES <- table(factor(scores, levels = 0:j)) |>
-    data.frame() |>
-    dplyr::mutate(Var1 = as.numeric(as.character(.data$Var1)))
+  g1 <- ggplot(data.frame(score = scores), aes(x = score)) +
+    geom_histogram(aes(y = after_stat(density)), binwidth = 1, fill = "steelblue", color = "black") +
+    xlab("Scores") +
+    ylab("Probability") +
+    scale_x_continuous(breaks = 0:ncol(x$df)) +
+    theme_bw()
+
 
   params <-  data.frame(x$items_param)
-
-
-  g1 <- ggplot2::ggplot(SCORES, aes(x = .data$Var1, y = .data$Freq)) +
-    ggplot2::geom_bar(stat = "identity", fill = "steelblue") +
-    xlab("Scores") + ylab("Freq") +
-    scale_x_continuous(breaks = seq(0, ncol(x$df), by = 1)) +
-    theme_bw()
 
 
   g2 <- ggplot2::ggplot(params) +

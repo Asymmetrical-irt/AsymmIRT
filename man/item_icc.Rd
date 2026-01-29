@@ -21,7 +21,7 @@ Plot the Item Characteristic Curve
 }
 \examples{
 
-dat <- simData(j=10,k=10,seed=123,model_type="LPE")
+dat <- simData(n=10,k=10,seed=123,model_type="LPE")
 
 if (instantiate::stan_cmdstan_exists()) {
 
