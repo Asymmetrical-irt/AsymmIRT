@@ -49,7 +49,7 @@
 #' @importFrom instantiate stan_package_model stan_cmdstan_exists
 #' @examples
 #'
-#' data <- simData(j=20,k=10,seed=123,model_type = "LPE")
+#' data <- simData(n=20,k=10,seed=123,model_type = "LPE")
 #' if (instantiate::stan_cmdstan_exists()) {
 #' fit <- fit_model(data = data$df, mod = "LPE2_log", iter_sampling = 50, iter_warmup = 50,
 #' chains=2, parallel_chains = 2, seed = 123)

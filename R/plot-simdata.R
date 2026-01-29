@@ -9,6 +9,7 @@
 #' @importFrom dplyr mutate
 #' @importFrom ggplot2 after_stat geom_histogram
 #'
+#'
 #' @return no returns
 #' @export
 #'
@@ -25,8 +26,8 @@ plot.simdata <- function(x,...){
 
   scores <- rowSums(x$df)
 
-  g1 <- ggplot(data.frame(score = scores), aes(x = score)) +
-    geom_histogram(aes(y = after_stat(density)), binwidth = 1, fill = "steelblue", color = "black") +
+  g1 <- ggplot(data.frame(score = scores), aes(x = .data$score)) +
+    geom_histogram(aes(y = after_stat(.data$density)), binwidth = 1, fill = "steelblue", color = "black") +
     xlab("Scores") +
     ylab("Probability") +
     scale_x_continuous(breaks = 0:ncol(x$df)) +
