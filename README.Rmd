@@ -21,13 +21,13 @@ library(AsymmIRT)
 ```
 
 
-# AsymmIRT: Bayesian analysis of asymmetrical IRT models (RLPE, LPE) models and symmetrical IRT models
+# AsymmIRT: Bayesian analysis of asymmetric IRT models (RLPE, LPE) models and symmetric IRT models
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/Asymmetrical-irt/AsymmIRT/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Asymmetrical-irt/AsymmIRT/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-The goal of AsymmIRT is to perform bayesian analysis of asymmetrical IRT models (e.g 1PLPE, 1PRLPE, LPE, RLPE) and widely known symmetrical models such as 1PL and 2PL. The family of LPE models considers a parameter which introduces asymmetry in the ICC.
+The goal of AsymmIRT is to perform bayesian analysis of asymmetric IRT models (e.g 1PLPE, 1PRLPE, LPE, RLPE) and widely known symmetric models such as 1PL and 2PL. The family of LPE models considers a parameter which introduces asymmetry in the ICC.
 
 ## Installation
 
@@ -82,8 +82,8 @@ Notice that the function fit_model() returns a list of three objects. The data l
 
 
 ```{r fit}
-data <- simData(n=n , k=k, seed=seed, model_type=model_type)
-fit <- AsymmIRT::fit_model(data = data$df, iter_warmup = iter_warmup, iter_sampling = iter_sampling, mod = model_type, seed = seed, chains = chains, parallel_chains = parallel_chains)
+data <- simData(n=25 , k=20, seed=123, model_type="LPE")
+fit <- AsymmIRT::fit_model(data = data$df, iter_warmup = iter_warmup, iter_sampling = iter_sampling, mod = "LPE2_log", seed = seed, chains = chains, parallel_chains = parallel_chains)
 ```
 
 
@@ -136,3 +136,16 @@ item_icc(fit, item = 2, theta_lim = c(-12,12))
 item_info(fit, item = 2, theta_lim = c(-12,12))
 ```
 
+To visually diagnose the convergence of the MCMC chains, the package AsymmIRT also allows to
+obtain traceplots of the parameter
+
+```{r item_plot_trace}
+plot_trace(fit, variable = "b")
+```
+
+Adittionally, to plot the HPD intervals alongside the estimation median
+the user can use the plot method of the Asymmfit class
+
+```{r hpd}
+plot(fit, variable = "b")
+```

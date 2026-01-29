@@ -5,16 +5,17 @@
 library(AsymmIRT)
 ```
 
-# AsymmIRT: Bayesian analysis of asymmetrical IRT models (RLPE, LPE) models and symmetrical IRT models
+# AsymmIRT: Bayesian analysis of asymmetric IRT models (RLPE, LPE) models and symmetric IRT models
 
 <!-- badges: start -->
 
+[![R-CMD-check](https://github.com/Asymmetrical-irt/AsymmIRT/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Asymmetrical-irt/AsymmIRT/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-The goal of AsymmIRT is to perform bayesian analysis of asymmetrical IRT
-models (e.g 1PLPE, 1PRLPE, LPE, RLPE) and widely known symmetrical
-models such as 1PL and 2PL. The family of LPE models considers a
-parameter which introduces asymmetry in the ICC.
+The goal of AsymmIRT is to perform bayesian analysis of asymmetric IRT
+models (e.g 1PLPE, 1PRLPE, LPE, RLPE) and widely known symmetric models
+such as 1PL and 2PL. The family of LPE models considers a parameter
+which introduces asymmetry in the ICC.
 
 ## Installation
 
@@ -37,16 +38,14 @@ and the parameters of the simulated data. There is also a way to print a
 summary of the dataset.
 
 ``` r
-j = 20 ## number of items
-k = 4      ## number of individuals
-model_type   = "LPE"   ## type of model to simulate data from (e.g LPE, RLPE,1PRLPE)
-seed = 123  
-```
-
-``` r
 library(AsymmIRT)
 
-data <- simData(j =20 , k = 4, seed = 123,model_type ="LPE")
+n = 25      ## number of individuals
+k = 20 ## number of items
+model_type   = "LPE"   ## type of model to simulate data from (e.g LPE, RLPE,1PRLPE)
+seed = 123  
+
+data <- simData(n=n , k=k, seed=seed, model_type="LPE")
 
 
 plot(data)
@@ -64,31 +63,30 @@ plot(data)
 ``` r
 print(data)
 #>         mean    sd proportion_0 proportion_1 kappa
-#> Item_1  1.00 0.000         0.00         1.00   1.0
-#> Item_2  0.50 0.577         0.50         0.50   0.0
-#> Item_3  1.00 0.000         0.00         1.00   1.0
-#> Item_4  0.75 0.500         0.25         0.75   0.5
-#> Item_5  0.25 0.500         0.75         0.25   0.5
-#> Item_6  1.00 0.000         0.00         1.00   1.0
-#> Item_7  0.75 0.500         0.25         0.75   0.5
-#> Item_8  1.00 0.000         0.00         1.00   1.0
-#> Item_9  1.00 0.000         0.00         1.00   1.0
-#> Item_10 0.25 0.500         0.75         0.25   0.5
-#> Item_11 0.25 0.500         0.75         0.25   0.5
-#> Item_12 0.75 0.500         0.25         0.75   0.5
-#> Item_13 0.25 0.500         0.75         0.25   0.5
-#> Item_14 1.00 0.000         0.00         1.00   1.0
-#> Item_15 0.75 0.500         0.25         0.75   0.5
-#> Item_16 0.25 0.500         0.75         0.25   0.5
-#> Item_17 0.00 0.000         1.00         0.00   1.0
-#> Item_18 0.25 0.500         0.75         0.25   0.5
-#> Item_19 0.25 0.500         0.75         0.25   0.5
-#> Item_20 0.00 0.000         1.00         0.00   1.0
+#> Item_1  0.92 0.277         0.08         0.92  0.84
+#> Item_2  0.44 0.507         0.56         0.44  0.12
+#> Item_3  0.72 0.458         0.28         0.72  0.44
+#> Item_4  0.44 0.507         0.56         0.44  0.12
+#> Item_5  0.72 0.458         0.28         0.72  0.44
+#> Item_6  0.92 0.277         0.08         0.92  0.84
+#> Item_7  0.44 0.507         0.56         0.44  0.12
+#> Item_8  0.84 0.374         0.16         0.84  0.68
+#> Item_9  0.56 0.507         0.44         0.56  0.12
+#> Item_10 0.44 0.507         0.56         0.44  0.12
+#> Item_11 0.40 0.500         0.60         0.40  0.20
+#> Item_12 0.76 0.436         0.24         0.76  0.52
+#> Item_13 0.48 0.510         0.52         0.48  0.04
+#> Item_14 0.04 0.200         0.96         0.04  0.92
+#> Item_15 0.40 0.500         0.60         0.40  0.20
+#> Item_16 0.00 0.000         1.00         0.00  1.00
+#> Item_17 0.04 0.200         0.96         0.04  0.92
+#> Item_18 0.44 0.507         0.56         0.44  0.12
+#> Item_19 0.44 0.507         0.56         0.44  0.12
+#> Item_20 0.48 0.510         0.52         0.48  0.04
 #> 
 #> Items unbalanced according to kappa index:
-#>  [1] "Item_1"  "Item_3"  "Item_4"  "Item_5"  "Item_6"  "Item_7"  "Item_8" 
-#>  [8] "Item_9"  "Item_10" "Item_11" "Item_12" "Item_13" "Item_14" "Item_15"
-#> [15] "Item_16" "Item_17" "Item_18" "Item_19" "Item_20"
+#> [1] "Item_1"  "Item_3"  "Item_5"  "Item_6"  "Item_8"  "Item_12" "Item_14"
+#> [8] "Item_16" "Item_17"
 ```
 
 ## Fitting the data to a model
@@ -120,28 +118,30 @@ The data list, type of model and the **output** which is a R6
 CmdStanMCMC object.
 
 ``` r
-data <- simData(j =20 , k = 4, seed = 123,model_type ="LPE")
+data <- simData(n=25 , k=20, seed=123, model_type="LPE")
 fit <- AsymmIRT::fit_model(data = data$df, iter_warmup = iter_warmup, iter_sampling = iter_sampling, mod = "LPE2_log", seed = seed, chains = chains, parallel_chains = parallel_chains)
 #> Running MCMC with 2 parallel chains...
 #> 
 #> Chain 1 Iteration:   1 / 400 [  0%]  (Warmup) 
 #> Chain 1 Iteration: 100 / 400 [ 25%]  (Warmup) 
-#> Chain 1 Iteration: 200 / 400 [ 50%]  (Warmup) 
-#> Chain 1 Iteration: 201 / 400 [ 50%]  (Sampling) 
-#> Chain 1 Iteration: 300 / 400 [ 75%]  (Sampling) 
 #> Chain 2 Iteration:   1 / 400 [  0%]  (Warmup) 
 #> Chain 2 Iteration: 100 / 400 [ 25%]  (Warmup) 
+#> Chain 1 Iteration: 200 / 400 [ 50%]  (Warmup) 
+#> Chain 1 Iteration: 201 / 400 [ 50%]  (Sampling) 
 #> Chain 2 Iteration: 200 / 400 [ 50%]  (Warmup) 
 #> Chain 2 Iteration: 201 / 400 [ 50%]  (Sampling) 
+#> Chain 1 Iteration: 300 / 400 [ 75%]  (Sampling) 
 #> Chain 2 Iteration: 300 / 400 [ 75%]  (Sampling) 
 #> Chain 2 Iteration: 400 / 400 [100%]  (Sampling) 
+#> Chain 2 finished in 0.4 seconds.
 #> Chain 1 Iteration: 400 / 400 [100%]  (Sampling) 
-#> Chain 1 finished in 0.1 seconds.
-#> Chain 2 finished in 0.1 seconds.
+#> Chain 1 finished in 0.5 seconds.
 #> 
 #> Both chains finished successfully.
-#> Mean chain execution time: 0.1 seconds.
-#> Total execution time: 0.2 seconds.
+#> Mean chain execution time: 0.4 seconds.
+#> Total execution time: 0.6 seconds.
+#> Warning: 1 of 400 (0.0%) transitions ended with a divergence.
+#> See https://mc-stan.org/misc/warnings for details.
 ```
 
 ``` r
@@ -208,7 +208,7 @@ Here we can see the code of the model. In this example priors are
 
 The model 1PLPE is:
 
-![p\_{ij}^{1PLPE} = P(Y\_{ij} = 1) = \left( \frac{\exp(\theta - b)}{\exp(\theta - b) + 1} \right)^{\lambda\_{j}}](https://latex.codecogs.com/png.latex?p_%7Bij%7D%5E%7B1PLPE%7D%20%3D%20P%28Y_%7Bij%7D%20%3D%201%29%20%3D%20%5Cleft%28%20%5Cfrac%7B%5Cexp%28%5Ctheta%20-%20b%29%7D%7B%5Cexp%28%5Ctheta%20-%20b%29%20%2B%201%7D%20%5Cright%29%5E%7B%5Clambda_%7Bj%7D%7D "p_{ij}^{1PLPE} = P(Y_{ij} = 1) = \left( \frac{\exp(\theta - b)}{\exp(\theta - b) + 1} \right)^{\lambda_{j}}")
+![p\_{ij}^{1PLPE} = P(Y\_{ij} = 1) = \left( \frac{\exp(\theta - b)}{1 + \exp(\theta - b) } \right)^{\lambda\_{j}}](https://latex.codecogs.com/png.latex?p_%7Bij%7D%5E%7B1PLPE%7D%20%3D%20P%28Y_%7Bij%7D%20%3D%201%29%20%3D%20%5Cleft%28%20%5Cfrac%7B%5Cexp%28%5Ctheta%20-%20b%29%7D%7B1%20%2B%20%5Cexp%28%5Ctheta%20-%20b%29%20%7D%20%5Cright%29%5E%7B%5Clambda_%7Bj%7D%7D "p_{ij}^{1PLPE} = P(Y_{ij} = 1) = \left( \frac{\exp(\theta - b)}{1 + \exp(\theta - b) } \right)^{\lambda_{j}}")
 
 Now it is possible to delve into the bayesian analysis. Notice that WAIC
 and loo accept other arguments, for further information visit the
@@ -216,43 +216,43 @@ webpage of the **loo** package.
 
 ``` r
 summary(fit,variable = c("b","theta","lambda"), ci = 0.95)
-#> # A tibble: 44 × 12
-#>    variable    mean  median    sd   mad     q5   q95  rhat ess_bulk ess_tail
-#>    <chr>      <dbl>   <dbl> <dbl> <dbl>  <dbl> <dbl> <dbl>    <dbl>    <dbl>
-#>  1 b[1]     -0.800  -0.826  0.827 0.735 -2.12  0.590 1.00      336.     293.
-#>  2 b[2]      0.0181  0.0479 1.06  1.04  -1.78  1.69  0.998     620.     312.
-#>  3 b[3]     -0.761  -0.801  0.920 0.827 -2.23  0.795 1.02      389.     318.
-#>  4 b[4]     -0.215  -0.239  0.891 0.852 -1.62  1.44  1.01      248.     141.
-#>  5 b[5]      0.416   0.509  0.888 0.763 -1.30  1.80  1.00      367.     265.
-#>  6 b[6]     -0.778  -0.849  0.947 0.936 -2.16  0.989 1.01      412.     197.
-#>  7 b[7]     -0.252  -0.258  0.847 0.827 -1.62  1.04  0.998     443.     295.
-#>  8 b[8]     -0.781  -0.766  0.808 0.744 -2.22  0.511 1.00      424.     312.
-#>  9 b[9]     -0.775  -0.763  0.882 0.803 -2.12  0.606 1.01      371.     276.
-#> 10 b[10]     0.468   0.519  0.817 0.706 -0.995 1.76  1.01      433.     307.
-#> # ℹ 34 more rows
+#> # A tibble: 65 × 12
+#>    variable    mean median    sd   mad     q5     q95  rhat ess_bulk ess_tail
+#>    <chr>      <dbl>  <dbl> <dbl> <dbl>  <dbl>   <dbl> <dbl>    <dbl>    <dbl>
+#>  1 b[1]     -1.34   -1.35  0.569 0.509 -2.22  -0.244  0.999     389.     344.
+#>  2 b[2]      0.228   0.239 0.587 0.586 -0.754  1.22   1.00      477.     367.
+#>  3 b[3]     -0.694  -0.709 0.391 0.336 -1.29  -0.0605 1.01      322.     296.
+#>  4 b[4]      0.202   0.239 0.771 0.694 -1.12   1.42   1.00      310.     219.
+#>  5 b[5]     -0.646  -0.662 0.588 0.512 -1.61   0.344  1.01      382.     289.
+#>  6 b[6]     -1.27   -1.35  0.685 0.632 -2.30  -0.0817 1.01      467.     306.
+#>  7 b[7]      0.278   0.239 0.810 0.865 -1.02   1.63   1.01      461.     344.
+#>  8 b[8]     -0.900  -0.915 0.669 0.582 -2.02   0.249  1.01      542.     312.
+#>  9 b[9]      0.0287  0.110 0.937 0.905 -1.46   1.48   1.00      397.     289.
+#> 10 b[10]     0.320   0.327 0.892 0.923 -1.09   1.71   0.999     432.     272.
+#> # ℹ 55 more rows
 #> # ℹ 2 more variables: HDI_low <dbl>, HDI_high <dbl>
 ```
 
 ``` r
 DIC(fit)
 #> DIC ------
-#> [1] 98.08827
+#> [1] 469.2878
 ```
 
 ``` r
 WAIC(fit)
 #> Warning: 
-#> 5 (6.2%) p_waic estimates greater than 0.4. We recommend trying loo instead.
+#> 20 (4.0%) p_waic estimates greater than 0.4. We recommend trying loo instead.
 #> WAIC ------
 #> 
-#> Computed from 400 by 80 log-likelihood matrix.
+#> Computed from 400 by 500 log-likelihood matrix.
 #> 
-#>           Estimate  SE
-#> elpd_waic    -42.2 3.4
-#> p_waic        11.9 1.2
-#> waic          84.3 6.8
+#>           Estimate   SE
+#> elpd_waic   -218.3 10.3
+#> p_waic        39.7  2.8
+#> waic         436.5 20.5
 #> 
-#> 5 (6.2%) p_waic estimates greater than 0.4. We recommend trying loo instead.
+#> 20 (4.0%) p_waic estimates greater than 0.4. We recommend trying loo instead.
 ```
 
 ``` r
@@ -260,21 +260,21 @@ loo(fit)
 #> Warning: Some Pareto k diagnostic values are too high. See help('pareto-k-diagnostic') for details.
 #> LOO ------
 #> 
-#> Computed from 400 by 80 log-likelihood matrix.
+#> Computed from 400 by 500 log-likelihood matrix.
 #> 
-#>          Estimate  SE
-#> elpd_loo    -43.0 3.5
-#> p_loo        12.7 1.4
-#> looic        85.9 7.1
+#>          Estimate   SE
+#> elpd_loo   -219.9 10.4
+#> p_loo        41.3  3.0
+#> looic       439.9 20.8
 #> ------
 #> MCSE of elpd_loo is NA.
-#> MCSE and ESS estimates assume MCMC draws (r_eff in [0.6, 1.8]).
+#> MCSE and ESS estimates assume MCMC draws (r_eff in [0.5, 1.7]).
 #> 
 #> Pareto k diagnostic values:
 #>                           Count Pct.    Min. ESS
-#> (-Inf, 0.62]   (good)     69    86.2%   133     
-#>    (0.62, 1]   (bad)      10    12.5%   <NA>    
-#>     (1, Inf)   (very bad)  1     1.2%   <NA>    
+#> (-Inf, 0.62]   (good)     478   95.6%   74      
+#>    (0.62, 1]   (bad)       21    4.2%   <NA>    
+#>     (1, Inf)   (very bad)   1    0.2%   <NA>    
 #> See help('pareto-k-diagnostic') for details.
 ```
 
@@ -291,3 +291,21 @@ item_info(fit, item = 2, theta_lim = c(-12,12))
 ```
 
 ![](README_files/figure-gfm/item_info-1.png)<!-- -->
+
+To visually diagnose the convergence of the MCMC chains, the package
+AsymmIRT also allows to obtain traceplots of the parameter
+
+``` r
+plot_trace(fit, variable = "b")
+```
+
+![](README_files/figure-gfm/item_plot_trace-1.png)<!-- -->
+
+Adittionally, to plot the HPD intervals alongside the estimation median
+the user can use the plot method of the Asymmfit class
+
+``` r
+plot(fit, variable = "b")
+```
+
+![](README_files/figure-gfm/hpd-1.png)<!-- -->
