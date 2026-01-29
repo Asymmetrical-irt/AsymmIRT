@@ -2,12 +2,12 @@
 % Please edit documentation in R/print-simdata.R
 \name{print.simdata}
 \alias{print.simdata}
-\title{Print summary of simulated dataset}
+\title{Print summary of simulated dataset or a binary matrix}
 \usage{
 \method{print}{simdata}(x, ...)
 }
 \arguments{
-\item{x}{An object of class \code{"simdata"}}
+\item{x}{An object of class \code{"simdata"} or a binary matrix containing only zeros and ones, with rows representing individuals and columns representing items}
 
 \item{...}{Ignored}
 }
@@ -24,7 +24,7 @@ The matrix is returned invisibly. A summary is printed to the console
 }
 \description{
 This function computes some descriptive statistics (e.g mean, sd, proportions of 1's and 0's)
-of the generated dataset with the simData function. Kappa's index is computed by following the works
+of the generated dataset with the simData function or a binary matrix only containing ones and zeros. Kappa's index is computed by following the works
 of Bazán et. al (2025), where an item is considered unbalanced if kappa > 0.2
 }
 \examples{

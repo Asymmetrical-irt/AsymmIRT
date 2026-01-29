@@ -31,7 +31,7 @@ print.simdata <- function(x,...){
     binary_matrix <- as.matrix(x)
   }
 
-  if (!(inherits(binary_matrix, "simdata") || (is.matrix(binary_matrix) && all(binary_matrix %in% c(0,1))))) {
+  if ( is.matrix(binary_matrix) && all(binary_matrix %in% c(0,1))) {
     stop("x must be an object of 'simdata' or a binary matrix of 1's and 0's")
   }
 
