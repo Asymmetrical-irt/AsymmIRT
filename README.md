@@ -1,24 +1,28 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
+``` r
+library(AsymmIRT)
+```
 
-# AsymmIRT: Analysis of asymmetric IRT models 
+# AsymmIRT: Bayesian analysis of asymmetric IRT models (RLPE, LPE) models and symmetric IRT models
 
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/Asymmetrical-irt/AsymmIRT/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Asymmetrical-irt/AsymmIRT/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-AsymmIRT is an R package that provides a comprehensive toolkit for fitting, diagnosing, 
-and interpreting asymmetric IRT models. The package currently implement bayesian analysis 
-of asymmetric IRT models (e.g 1PLPE, 1PRLPE, LPE, RLPE) and widely known symmetric models
-such as 1PL and 2PL. Other asymmetric IRT models are planned to be implemented in the future. 
+AsymmIRT is an R package that provides a comprehensive toolkit for
+fitting, diagnosing, and interpreting asymmetric IRT models. The package
+currently implement bayesian analysis of asymmetric IRT models (e.g
+1PLPE, 1PRLPE, LPE, RLPE) and widely known symmetric models such as 1PL
+and 2PL. Other asymmetric IRT models are planned to be implemented in
+the future.
 
 ## Installation
 
 AsymmIRT uses [`cmdstanr`](https://mc-stan.org/cmdstanr/) (not available
-on CRAN). To install it, follow these instructions [Getting
-started with
+on CRAN). To install it, follow these instructions [Getting started with
 CmdStanR](https://mc-stan.org/cmdstanr/articles/cmdstanr.html)
 
 The development version of AsymmIRT can be installed typing:
@@ -30,11 +34,11 @@ remotes::install_github("Asymmetrical-irt/AsymmIRT")
 ## Data simulation
 
 This is a basic example on how to simulate data from the available
-asymmetric and symmetric models. The package provides \texttt{print()} and \texttt{plot()} 
-methods for examining generated datasets. The \texttt{print()} method displays summary 
-statistics including the mean, standard deviation, and range of true parameter values. The 
-\texttt{plot()} method produces a histogram of total scores, allowing quick assessment of 
-score distribution characteristics.
+asymmetric and symmetric models. The package provides and methods for
+examining generated datasets. The method displays summary statistics
+including the mean, standard deviation, and range of true parameter
+values. The method produces a histogram of total scores, allowing quick
+assessment of score distribution characteristics.
 
 ``` r
 library(AsymmIRT)
@@ -44,7 +48,7 @@ k = 20 ## number of items
 model_type   = "LPE"   ## type of model to simulate data from (e.g LPE, RLPE,1PRLPE)
 seed = 123  
 
-data <- simData(n=n , k=k, seed=seed, model_type="LPE")
+data <- simData(n=n , k=k, seed=seed, model_type=model_type)
 
 
 plot(data)
@@ -91,16 +95,14 @@ print(data)
 ## Fitting the data to a model
 
 Fitting models using the AsymmIRT package relies on pre-compiled models,
-using the *instantiate* package, which manages
-the compilation and loading of the Stan models. It is important to
-notice that the function fit_model() accepts the same arguments as the
-sample method in CmdStanR.
+using the instantiate package, which manages the compilation and loading
+of the Stan models. It is important to notice that the function
+fit_model() accepts the same arguments as the sample method in CmdStanR.
 
-Additionally computing metrics such as WAIC, DIC and loo can
-be obtained for the available models using a
-’\_log’ suffix. For example, specifying ‘1PLPE_log’ instead of
-‘1PLPE’, the output will allow to use the methods in the package to compute 
-these metrics.
+Additionally computing metrics such as WAIC, DIC and loo can be obtained
+for the available models using a ’\_log’ suffix. For example, specifying
+‘1PLPE_log’ instead of ‘1PLPE’, the output will allow to use the methods
+in the package to compute these metrics.
 
 ``` r
 iter_warmup = 200 ## number of items
@@ -131,14 +133,14 @@ fit <- AsymmIRT::fit_model(data = data$df, iter_warmup = iter_warmup, iter_sampl
 #> Chain 2 Iteration: 201 / 400 [ 50%]  (Sampling) 
 #> Chain 1 Iteration: 300 / 400 [ 75%]  (Sampling) 
 #> Chain 2 Iteration: 300 / 400 [ 75%]  (Sampling) 
-#> Chain 2 Iteration: 400 / 400 [100%]  (Sampling) 
-#> Chain 2 finished in 0.4 seconds.
 #> Chain 1 Iteration: 400 / 400 [100%]  (Sampling) 
-#> Chain 1 finished in 0.5 seconds.
+#> Chain 2 Iteration: 400 / 400 [100%]  (Sampling) 
+#> Chain 1 finished in 0.4 seconds.
+#> Chain 2 finished in 0.4 seconds.
 #> 
 #> Both chains finished successfully.
 #> Mean chain execution time: 0.4 seconds.
-#> Total execution time: 0.6 seconds.
+#> Total execution time: 0.5 seconds.
 #> Warning: 1 of 400 (0.0%) transitions ended with a divergence.
 #> See https://mc-stan.org/misc/warnings for details.
 ```
@@ -205,7 +207,7 @@ Here we can see the code of the model. In this example priors are
 
 ![\lambda\_{j} \sim LogNormal(0,\sqrt{0.5})](https://latex.codecogs.com/png.latex?%5Clambda_%7Bj%7D%20%5Csim%20LogNormal%280%2C%5Csqrt%7B0.5%7D%29 "\lambda_{j} \sim LogNormal(0,\sqrt{0.5})")
 
-The 1PLPE model is:
+The model 1PLPE is:
 
 ![p\_{ij}^{1PLPE} = P(Y\_{ij} = 1) = \left( \frac{\exp(\theta - b)}{1 + \exp(\theta - b) } \right)^{\lambda\_{j}}](https://latex.codecogs.com/png.latex?p_%7Bij%7D%5E%7B1PLPE%7D%20%3D%20P%28Y_%7Bij%7D%20%3D%201%29%20%3D%20%5Cleft%28%20%5Cfrac%7B%5Cexp%28%5Ctheta%20-%20b%29%7D%7B1%20%2B%20%5Cexp%28%5Ctheta%20-%20b%29%20%7D%20%5Cright%29%5E%7B%5Clambda_%7Bj%7D%7D "p_{ij}^{1PLPE} = P(Y_{ij} = 1) = \left( \frac{\exp(\theta - b)}{1 + \exp(\theta - b) } \right)^{\lambda_{j}}")
 
@@ -277,16 +279,16 @@ loo(fit)
 #> See help('pareto-k-diagnostic') for details.
 ```
 
-Plots of the item icc and item info can be obtained as
+Lets plot the item icc and item info
 
 ``` r
-item_icc(fit, item = 2, theta_lim = c(-12,12))
+item_icc(fit, item = 2, theta_lim = c(-4,4))
 ```
 
 ![](README_files/figure-gfm/item_icc-1.png)<!-- -->
 
 ``` r
-item_info(fit, item = 2, theta_lim = c(-12,12))
+item_info(fit, item = 2, theta_lim = c(-4,4))
 ```
 
 ![](README_files/figure-gfm/item_info-1.png)<!-- -->
@@ -300,7 +302,7 @@ plot_trace(fit, variable = "b")
 
 ![](README_files/figure-gfm/item_plot_trace-1.png)<!-- -->
 
-Adittionally, to plot the HPD intervals alongside the posterior point estimate 
+Adittionally, to plot the HPD intervals alongside the estimation median
 the user can use the plot method of the Asymmfit class
 
 ``` r

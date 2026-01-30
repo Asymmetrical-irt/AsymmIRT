@@ -27,21 +27,20 @@ library(AsymmIRT)
 [![R-CMD-check](https://github.com/Asymmetrical-irt/AsymmIRT/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Asymmetrical-irt/AsymmIRT/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-The goal of AsymmIRT is to perform bayesian analysis of asymmetric IRT models (e.g 1PLPE, 1PRLPE, LPE, RLPE) and widely known symmetric models such as 1PL and 2PL. The family of LPE models considers a parameter which introduces asymmetry in the ICC.
+AsymmIRT is an R package that provides a comprehensive toolkit for fitting, diagnosing, and interpreting asymmetric IRT models. The package currently implement bayesian analysis of asymmetric IRT models (e.g 1PLPE, 1PRLPE, LPE, RLPE) and widely known symmetric models such as 1PL and 2PL. Other asymmetric IRT models are planned to be implemented in the future.
 
 ## Installation
 
-AsymmIRT uses [`cmdstanr`](https://mc-stan.org/cmdstanr/) (not available on CRAN), to install it you should follow these instructions [Getting started with CmdStanR](https://mc-stan.org/cmdstanr/articles/cmdstanr.html) 
+AsymmIRT uses [`cmdstanr`](https://mc-stan.org/cmdstanr/) (not available on CRAN). To install it, follow these instructions [Getting started with CmdStanR](https://mc-stan.org/cmdstanr/articles/cmdstanr.html) 
 
-You can install the development version of AsymmIRT like so:
-
+The development version of AsymmIRT can be installed typing:
 ``` r
 remotes::install_github("Asymmetrical-irt/AsymmIRT")
 ```
 
 ## Data simulation
 
-This is a basic example on how to simulate data from the available asymmetrical and symmetrical models. The user can also plot the scores and the parameters of the simulated data. There is also a way to print a summary of the dataset.
+This is a basic example on how to simulate data from the available asymmetric and symmetric models. The package provides \texttt{print()} and \texttt{plot()} methods for examining generated datasets. The \texttt{print()} method displays summary statistics including the mean, standard deviation, and range of true parameter values. The \texttt{plot()} method produces a histogram of total scores, allowing quick assessment of score distribution characteristics.
 
 ```{r parallel_setup}
 
@@ -55,7 +54,7 @@ k = 20 ## number of items
 model_type   = "LPE"   ## type of model to simulate data from (e.g LPE, RLPE,1PRLPE)
 seed = 123  
 
-data <- simData(n=n , k=k, seed=seed, model_type="LPE")
+data <- simData(n=n , k=k, seed=seed, model_type=model_type)
 
 
 plot(data)
@@ -64,9 +63,9 @@ print(data)
 
 ## Fitting the data to a model
 
-Fitting models under the AsymmIRT package relies on pre-compiled models, which are pre-compiled using the *instantiate* package, which manages the compilation and loading of the Stan models. It is important to notice that the function fit_model() accepts the same arguments as the sample method in CmdStanR.
+Fitting models using the AsymmIRT package relies on pre-compiled models, using the instantiate package, which manages the compilation and loading of the Stan models. It is important to notice that the function fit_model() accepts the same arguments as the sample method in CmdStanR.
 
-Additionally and since computing metrics such as WAIC, DIC and loo can be computationally expensive, the available models for fitting has a '_log' suffix, if the user chooses, for example, '1PLPE_log' instead of '1PLPE' then they can use the methods in the package to compute these metrics.
+Additionally computing metrics such as WAIC, DIC and loo can be obtained for the available models using a ’_log’ suffix. For example, specifying ‘1PLPE_log’ instead of ‘1PLPE’, the output will allow to use the methods in the package to compute these metrics.
 
 ```{r fit_setup}
 iter_warmup = 200 ## number of items
@@ -128,12 +127,12 @@ Lets plot the item icc and item info
 
 
 ```{r item_icc}
-item_icc(fit, item = 2, theta_lim = c(-12,12))
+item_icc(fit, item = 2, theta_lim = c(-4,4))
 ```
 
 
 ```{r item_info}
-item_info(fit, item = 2, theta_lim = c(-12,12))
+item_info(fit, item = 2, theta_lim = c(-4,4))
 ```
 
 To visually diagnose the convergence of the MCMC chains, the package AsymmIRT also allows to
