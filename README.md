@@ -278,13 +278,13 @@ loo(fit)
 Lets plot the item icc and item info
 
 ``` r
-item_icc(fit, item = 2, theta_lim = c(-4,4))
+item_icc(fit, item = 2, theta_lim = c(-3,3))
 ```
 
 ![](README_files/figure-gfm/item_icc-1.png)<!-- -->
 
 ``` r
-item_info(fit, item = 2, theta_lim = c(-4,4))
+item_info(fit, item = 2, theta_lim = c(-3,3))
 ```
 
 ![](README_files/figure-gfm/item_info-1.png)<!-- -->
