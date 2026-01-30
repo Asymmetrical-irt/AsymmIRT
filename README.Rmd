@@ -16,11 +16,6 @@ remotes::install_github("Asymmetrical-irt/AsymmIRT")
 ```
 
 
-```{r library}
-library(AsymmIRT)
-```
-
-
 # AsymmIRT: Bayesian analysis of asymmetric IRT models (RLPE, LPE) models and symmetric IRT models
 
 <!-- badges: start -->
