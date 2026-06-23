@@ -26,6 +26,7 @@
 #'      \item \code{"1PL"}  or \code{"1PL_log"}
 #'      \item \code{"1PLPE"}  or \code{"1PLPE_log"}
 #'      \item \code{"1PRLPE"}  or \code{"1PRLPE_log"}
+#'      \item \code{"2PL_new"}  or \code{"2PL_new_log"}
 #'
 #' }
 #'
@@ -82,7 +83,7 @@ fit_model <- function(data, mod,...){
 
          models <- c("LPE1","LPE2","LPE3","RLPE1","RLPE2","RLPE3","2PL","1PL","1PLPE","1PRLPE",
                      "LPE1_log","RLPE1_log","LPE2_log","RLPE2_log","LPE3_log","RLPE3_log",
-                     "2PL_log","1PL_log","1PLPE_log","1PRLPE_log")
+                     "2PL_log","1PL_log","1PLPE_log","1PRLPE_log","2PL_new","2PL_new_log")
 
 
          if (!(mod %in% models)) {
